@@ -30,61 +30,79 @@
 // }
 // window.onload = app;
 
-var createCat = function(){
-  let cat = document.createElement("ul");
-  cat.classList.add("list-unstyled");
-  return cat;
+
+//create ul
+var createul = function(){
+  let ul = document.createElement("ul");
+  ul.classList.add("cat");
+  return ul;
 }
 
-var createName = function(text){
- let name = document.createElement("li");
- name.innerText = "Name: " + text;
- return name;
+//create li
+var createli = function(label, text){
+ let li = document.createElement("li");
+ li.innerText = `${label}: ${text}`;
+ return li;
 }
 
-var createFavouriteFood = function(text){
- let favouriteFood = document.createElement("li");
- favouriteFood.innerText = "Favourite food: " + text;
- return favouriteFood;
-}
-
-var createPicture = function(){
- let picture = document.createElement("li");
- return picture;
-}
-
+//create image
 var createImage = function(text){
- let image = document.createElement("image");
- image.innerHTML = text;
- return image;
+ let li = document.createElement("li");
+ let image = document.createElement("img");
+ image.src = text;
+ image.width = 300;
+ li.appendChild(image);
+ return li;
 }
 
 
-
-var appendElements = function(cat, name, favouriteFood, image, picture){
-  picture.appendChild(image);
-  cat.appendChild(name);
-  cat.appendChild(favouriteFood);
-  cat.appendChild(picture);
-
-  let cats = document.querySelector('#cats');
-  cats.appendChild(cat);
+//append items
+var appendElements = function(catSection, listElement, name, favFood, image){
+  listElement.appendChild(name);
+  listElement.appendChild(favFood);
+  listElement.appendChild(image);
+  catSection.appendChild(listElement);
 }
 
+//add cat function
+var addCat = function(name, favFood, url){
+  let ul = createul();
+  let nameli = createli("Name: ", name)
+  let favFoodli = createli("Favourite Food: ", favFood);
+  let imageli = createImage(url);
+  let catSection = document.querySelector('#cats')
 
-var addCat = function(name, favouriteFood, image){
-  var catName = createName(name);
-  var catFavouriteFood = createFavouriteFood(favouriteFood);
-  var catImage = createImage(image);
-  var picture = createPicture();
-  var cat = createCat();
-
-  appendElements(cat ,catName, catFavouriteFood, catImage, picture);
+  appendElements(catSection ,ul, nameli, favFoodli, imageli);
 }
 
-window.onload = function(){
-addCat("Tom", "Mice", '<img width="300" src=tom_cat.jpg>');
-addCat("Boba", "Sock fluff", '<img width="300" src=http://66.media.tumblr.com/d1f01bbe0150fda0c40d2151c5eaeac8/tumblr_odlqqskjj61v9cejwo1_400.jpg>');
-addCat("Barnaby", "Tuna", '<img width="300" src=https://68.media.tumblr.com/88d0fcf2b84a7b098dda839130597569/tumblr_okuo4teiql1uhevdso1_1280.jpg>');
-addCat("Max", "Whiskas Temptations", '<img width="300" src=http://66.media.tumblr.com/7c5784ea89369c780e782bf10c60315a/tumblr_npb0hlYwhV1u63jaco1_1280.jpg>');
-};
+const cats = [{
+  name: "Boba",
+  favFood: "sock fluff",
+  image: "http://66.media.tumblr.com/d1f01bbe0150fda0c40d2151c5eaeac8/tumblr_odlqqskjj61v9cejwo1_400.jpg"
+
+},
+{
+  name: "Tom",
+  favFood: "Mice",
+  image: "tom_cat.jpg"
+},
+{
+  name: "Max",
+  favFood: "Whiskas Temptations",
+  image: "http://66.media.tumblr.com/7c5784ea89369c780e782bf10c60315a/tumblr_npb0hlYwhV1u63jaco1_1280.jpg"
+},
+{
+  name: "Barnaby",
+  favFood: "Tuna",
+  image: "https://68.media.tumblr.com/88d0fcf2b84a7b098dda839130597569/tumblr_okuo4teiql1uhevdso1_1280.jpg"
+}
+]
+
+const app = function(){
+
+  cats.forEach(function(cat){
+    addCat(cat.name, cat.favFood, cat.image);
+  })
+}
+
+window.onload = app;
